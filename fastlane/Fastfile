@@ -91,7 +91,6 @@ platform :ios do
     UI.message "ℹ️  App Store latest build: #{latest_store_build}"
     UI.message "ℹ️  CI build number:       #{ci_build}"
     UI.message "➡️  Using CFBundleVersion:  #{next_build}"
-
     auto_xcodeproj = project_path || Dir[File.join(repo_root, "*.xcodeproj")].first
       main_info_plist = Dir[File.join(repo_root, "LaughingDrops", "LaughingDrops", "Info.plist")].first
       if auto_xcodeproj && File.exist?(auto_xcodeproj)
@@ -120,7 +119,10 @@ platform :ios do
     notif_target = ENV["IOS_NOTIF_TARGET"].to_s.empty? ? "backgroundnotifications" : ENV["IOS_NOTIF_TARGET"]
 
     project_or_workspace_path = project_path || workspace_path
-
+    UI.message "➡️  project_path:  #{project_path}"
+    UI.message "➡️  workspace_path:  #{workspace_path}"
+    UI.message "➡️  project_or_workspace_path:  #{project_or_workspace_path}"
+        
     update_code_signing_settings(
       use_automatic_signing: false,
       team_id: main_team_id,
