@@ -91,8 +91,15 @@ platform :ios do
     UI.message "ℹ️  App Store latest build: #{latest_store_build}"
     UI.message "ℹ️  CI build number:       #{ci_build}"
     UI.message "➡️  Using CFBundleVersion:  #{next_build}"
+    
+    
+    UI.message "➡️  project_path:  #{project_path}"
+    UI.message "➡️  workspace_path:  #{workspace_path}"
+    UI.message "➡️  project_or_workspace_path:  #{project_or_workspace_path}"
+    UI.message "➡️  auto_xcodeproj:  #{project_path || Dir[File.join(repo_root, "*.xcodeproj")].first}"
+    
     auto_xcodeproj = project_path || Dir[File.join(repo_root, "*.xcodeproj")].first
-      main_info_plist = Dir[File.join(repo_root, "LaughingDrops", "LaughingDrops", "Info.plist")].first
+      main_info_plist = Dir[File.join(repo_root, "LaughingDrops", "LaughingDrops", "GoogleService-Info.plist")].first
       if auto_xcodeproj && File.exist?(auto_xcodeproj)
         increment_build_number(xcodeproj: auto_xcodeproj, build_number: next_build)
         if main_info_plist && File.exist?(main_info_plist)
@@ -104,7 +111,7 @@ platform :ios do
         end
       end
 
-    ext_info_plist = Dir[File.join(repo_root, "backgroundnotifications", "**/Info.plist")].first
+    ext_info_plist = Dir[File.join(repo_root, "backgroundnotifications", "**/GoogleService-Info.plist")].first
     if ext_info_plist && File.exist?(ext_info_plist)
       set_info_plist_value(path: ext_info_plist, key: "CFBundleVersion", value: next_build.to_s)
     end
@@ -119,9 +126,7 @@ platform :ios do
     notif_target = ENV["IOS_NOTIF_TARGET"].to_s.empty? ? "backgroundnotifications" : ENV["IOS_NOTIF_TARGET"]
 
     project_or_workspace_path = project_path || workspace_path
-    UI.message "➡️  project_path:  #{project_path}"
-    UI.message "➡️  workspace_path:  #{workspace_path}"
-    UI.message "➡️  project_or_workspace_path:  #{project_or_workspace_path}"
+
         
     update_code_signing_settings(
       use_automatic_signing: false,
