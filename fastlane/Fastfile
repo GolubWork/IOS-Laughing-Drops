@@ -97,9 +97,6 @@ platform :ios do
     UI.message "➡️  workspace_path:  #{workspace_path}"
     UI.message "➡️  auto_xcodeproj:  #{project_path || Dir[File.join(repo_root, "*.xcodeproj")].first}"
     
-    UI.message("🧩 update_code_signing_settings PATH = #{project_or_workspace_path}")
-    UI.message("Exists? #{File.exist?(project_or_workspace_path)}")
-
   
     auto_xcodeproj = project_path || Dir[File.join(repo_root, "*.xcodeproj")].first
       main_info_plist = Dir[File.join(repo_root, "LaughingDrops", "LaughingDrops", "GoogleService-Info.plist")].first
