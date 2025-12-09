@@ -93,7 +93,7 @@ platform :ios do
     UI.message "➡️  Using CFBundleVersion:  #{next_build}"
 
     auto_xcodeproj = project_path || Dir[File.join(repo_root, "*.xcodeproj")].first
-      main_info_plist = Dir[File.join(repo_root, "Teletester", "Teletester", "Info.plist")].first
+      main_info_plist = Dir[File.join(repo_root, "LaughingDrops", "LaughingDrops", "Info.plist")].first
       if auto_xcodeproj && File.exist?(auto_xcodeproj)
         increment_build_number(xcodeproj: auto_xcodeproj, build_number: next_build)
         if main_info_plist && File.exist?(main_info_plist)
