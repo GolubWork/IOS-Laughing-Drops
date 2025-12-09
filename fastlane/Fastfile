@@ -162,7 +162,10 @@ platform :ios do
         provisioningProfiles: provisioning_profiles
       }
     }
-    workspace_path = "LaughingDrops.xcodeproj/project.xcworkspace"
+
+workspace_path = "LaughingDrops.xcodeproj/project.xcworkspace"
+ENV['FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT'] = '60'  # 60 секунд на попытку
+ENV['FASTLANE_XCODEBUILD_SETTINGS_RETRIES'] = '5'   # 5 повторов
 build_app(
   workspace: workspace_path,
   scheme: "LaughingDrops",          
