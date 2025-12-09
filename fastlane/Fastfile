@@ -95,7 +95,6 @@ platform :ios do
     
     UI.message "➡️  project_path:  #{project_path}"
     UI.message "➡️  workspace_path:  #{workspace_path}"
-    UI.message "➡️  project_or_workspace_path:  #{project_or_workspace_path}"
     UI.message "➡️  auto_xcodeproj:  #{project_path || Dir[File.join(repo_root, "*.xcodeproj")].first}"
     
     auto_xcodeproj = project_path || Dir[File.join(repo_root, "*.xcodeproj")].first
