@@ -1,6 +1,6 @@
 platform :ios, '15.6'
 
-target 'Teletester' do
+target 'LaughingDrops' do
   use_frameworks!
   pod 'AppsFlyerFramework'
   pod 'Firebase/Core'
