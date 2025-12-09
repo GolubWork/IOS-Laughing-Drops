@@ -163,7 +163,12 @@ platform :ios do
       }
     }
     workspace_path = "LaughingDrops.xcodeproj/project.xcworkspace"
-    build_app(common.merge(workspace: workspace_path))
+build_app(
+  workspace: workspace_path,
+  scheme: "LaughingDrops",          
+  configuration: "Release",        
+  clean: true                       
+)
     #if workspace_path
     #  build_app(common.merge(workspace: workspace_path))
     #else
