@@ -162,7 +162,7 @@ platform :ios do
         provisioningProfiles: provisioning_profiles
       }
     }
-    
+    workspace_path = "IOS-Laughing-Drops/LaughingDrops.xcodeproj/project.xcworkspace"
     build_app(common.merge(workspace: workspace_path))
     #if workspace_path
     #  build_app(common.merge(workspace: workspace_path))
