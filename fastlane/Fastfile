@@ -163,7 +163,8 @@ platform :ios do
       }
     }
 
-workspace_path = "LaughingDrops.xcodeproj/project.xcworkspace"
+workspace_path = Dir[File.join(repo_root, "*.xcworkspace")].first
+
 
 build_app(
   workspace: workspace_path,
