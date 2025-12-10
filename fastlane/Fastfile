@@ -205,12 +205,44 @@ end
     UI.message "📦 ipa_output_dir=#{ipa_output_dir}"
 
     UI.message "🔍 Searching for .xcworkspace explicitly"
-    workspace_path = Dir[File.join(repo_root, "**/*.xcworkspace")].first
+    workspace_path = Dir[File.join(repo_root, "**/*.xcworkspace")].reject { |p| p.include?(".xcodeproj/") }.first
+    project_path = Dir[File.join(repo_root, "**/*.xcodeproj")].first if workspace_path.nil?
+    workspaceOrProject = workspace_path ? workspace_path : project_path
 
-    UI.message "📂 FINAL workspace_path=#{workspace_path}"
+
 
     UI.message "🏗️ Starting build_app..."
-    build_app(workspace_path)
+UI.message "🏗️ Starting build_app..."
+
+if workspace_path
+  UI.message "🛠️ Using workspace for build"
+  UI.message "📂 workspace_path=#{workspace_path}"
+  UI.message "📄 scheme=#{scheme}"
+  UI.message "⚙️ configuration=Release, clean=true"
+
+  build_app(
+    workspace: workspace_path,
+    scheme: scheme,
+    configuration: "Release",
+    clean: true
+  )
+else
+  UI.message "🛠️ Using project for build"
+  UI.message "📂 project_path=#{project_path}"
+  UI.message "📄 scheme=#{scheme}"
+  UI.message "⚙️ configuration=Release, clean=true"
+
+  build_app(
+    project: project_path,
+    scheme: scheme,
+    configuration: "Release",
+    clean: true
+  )
+end
+
+UI.message "✅ build_app finished"
+
+
 
     UI.message "🔑 Setting up ASC API key again before upload"
     app_store_connect_api_key(
