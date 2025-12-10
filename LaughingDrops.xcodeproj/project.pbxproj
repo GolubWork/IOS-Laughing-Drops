@@ -10,27 +10,8 @@
 		C4251E072EE194B000CD6F2C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4251E062EE194B000CD6F2C /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		C4251DE52EE193BC00CD6F2C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C4251DCC2EE193B600CD6F2C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C4251DD32EE193B600CD6F2C;
-			remoteInfo = LaughingDrops;
-		};
-		C4251DEF2EE193BC00CD6F2C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C4251DCC2EE193B600CD6F2C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C4251DD32EE193B600CD6F2C;
-			remoteInfo = LaughingDrops;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		C4251DD42EE193B600CD6F2C /* LaughingDrops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LaughingDrops.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C4251DE42EE193BC00CD6F2C /* LaughingDropsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LaughingDropsTests.xctest; path = "/Users/otodr/Work/src/WaterTracker/LaughingDrops/LaughingDrops/build/Debug-iphoneos/LaughingDrops.app/PlugIns/LaughingDropsTests.xctest"; sourceTree = "<absolute>"; };
-		C4251DEE2EE193BC00CD6F2C /* LaughingDropsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LaughingDropsUITests.xctest; path = "/Users/otodr/Work/src/WaterTracker/LaughingDrops/LaughingDrops/build/Debug-iphoneos/LaughingDropsUITests-Runner.app/PlugIns/LaughingDropsUITests.xctest"; sourceTree = "<absolute>"; };
 		C4251E062EE194B000CD6F2C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -44,20 +25,6 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		C4251DD12EE193B600CD6F2C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C4251DE12EE193BC00CD6F2C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C4251DEB2EE193BC00CD6F2C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -109,46 +76,6 @@
 			productReference = C4251DD42EE193B600CD6F2C /* LaughingDrops.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C4251DE32EE193BC00CD6F2C /* LaughingDropsTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C4251DFB2EE193BC00CD6F2C /* Build configuration list for PBXNativeTarget "LaughingDropsTests" */;
-			buildPhases = (
-				C4251DE02EE193BC00CD6F2C /* Sources */,
-				C4251DE12EE193BC00CD6F2C /* Frameworks */,
-				C4251DE22EE193BC00CD6F2C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C4251DE62EE193BC00CD6F2C /* PBXTargetDependency */,
-			);
-			name = LaughingDropsTests;
-			packageProductDependencies = (
-			);
-			productName = LaughingDropsTests;
-			productReference = C4251DE42EE193BC00CD6F2C /* LaughingDropsTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		C4251DED2EE193BC00CD6F2C /* LaughingDropsUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C4251DFE2EE193BC00CD6F2C /* Build configuration list for PBXNativeTarget "LaughingDropsUITests" */;
-			buildPhases = (
-				C4251DEA2EE193BC00CD6F2C /* Sources */,
-				C4251DEB2EE193BC00CD6F2C /* Frameworks */,
-				C4251DEC2EE193BC00CD6F2C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C4251DF02EE193BC00CD6F2C /* PBXTargetDependency */,
-			);
-			name = LaughingDropsUITests;
-			packageProductDependencies = (
-			);
-			productName = LaughingDropsUITests;
-			productReference = C4251DEE2EE193BC00CD6F2C /* LaughingDropsUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -161,14 +88,6 @@
 				TargetAttributes = {
 					C4251DD32EE193B600CD6F2C = {
 						CreatedOnToolsVersion = 16.1;
-					};
-					C4251DE32EE193BC00CD6F2C = {
-						CreatedOnToolsVersion = 16.1;
-						TestTargetID = C4251DD32EE193B600CD6F2C;
-					};
-					C4251DED2EE193BC00CD6F2C = {
-						CreatedOnToolsVersion = 16.1;
-						TestTargetID = C4251DD32EE193B600CD6F2C;
 					};
 				};
 			};
@@ -189,8 +108,6 @@
 			projectRoot = "";
 			targets = (
 				C4251DD32EE193B600CD6F2C /* LaughingDrops */,
-				C4251DE32EE193BC00CD6F2C /* LaughingDropsTests */,
-				C4251DED2EE193BC00CD6F2C /* LaughingDropsUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -204,20 +121,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C4251DE22EE193BC00CD6F2C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C4251DEC2EE193BC00CD6F2C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -228,34 +131,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C4251DE02EE193BC00CD6F2C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C4251DEA2EE193BC00CD6F2C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C4251DE62EE193BC00CD6F2C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C4251DD32EE193B600CD6F2C /* LaughingDrops */;
-			targetProxy = C4251DE52EE193BC00CD6F2C /* PBXContainerItemProxy */;
-		};
-		C4251DF02EE193BC00CD6F2C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C4251DD32EE193B600CD6F2C /* LaughingDrops */;
-			targetProxy = C4251DEF2EE193BC00CD6F2C /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C4251DF62EE193BC00CD6F2C /* Debug */ = {
@@ -441,78 +317,6 @@
 			};
 			name = Release;
 		};
-		C4251DFC2EE193BC00CD6F2C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9QWGBW82SY;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.simpl.laughingdrops.LaughingDropsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LaughingDrops.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LaughingDrops";
-			};
-			name = Debug;
-		};
-		C4251DFD2EE193BC00CD6F2C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9QWGBW82SY;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.simpl.laughingdrops.LaughingDropsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LaughingDrops.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LaughingDrops";
-			};
-			name = Release;
-		};
-		C4251DFF2EE193BC00CD6F2C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9QWGBW82SY;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.simpl.laughingdrops.LaughingDropsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = LaughingDrops;
-			};
-			name = Debug;
-		};
-		C4251E002EE193BC00CD6F2C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9QWGBW82SY;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.simpl.laughingdrops.LaughingDropsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = LaughingDrops;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -530,24 +334,6 @@
 			buildConfigurations = (
 				C4251DF92EE193BC00CD6F2C /* Debug */,
 				C4251DFA2EE193BC00CD6F2C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C4251DFB2EE193BC00CD6F2C /* Build configuration list for PBXNativeTarget "LaughingDropsTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C4251DFC2EE193BC00CD6F2C /* Debug */,
-				C4251DFD2EE193BC00CD6F2C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C4251DFE2EE193BC00CD6F2C /* Build configuration list for PBXNativeTarget "LaughingDropsUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C4251DFF2EE193BC00CD6F2C /* Debug */,
-				C4251E002EE193BC00CD6F2C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
