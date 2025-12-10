@@ -205,42 +205,12 @@ end
     UI.message "📦 ipa_output_dir=#{ipa_output_dir}"
 
     UI.message "🔍 Searching for .xcworkspace explicitly"
-    workspace_path = Dir[File.join(repo_root, "*.xcworkspace")].first
+    workspace_path = Dir[File.join(repo_root, "**/*.xcworkspace")].first
+
     UI.message "📂 FINAL workspace_path=#{workspace_path}"
-    
-sh("echo '📁 REPO ROOT:'")
-sh("echo #{repo_root}")
-sh("echo '📁 WORKSPACE IN REPO ROOT:'")
-sh("ls -la #{repo_root}")
-
-sh("echo '📁 SEARCH *.xcworkspace IN REPO ROOT:'")
-sh("ls #{File.join(repo_root, '*.xcworkspace')} || true")
-
-sh("echo '📁 SEARCH xcschemes:'")
-sh("find #{repo_root} -name '*.xcscheme' || true")
-
-sh("echo '📁 FULL REPO STRUCTURE:'")
-sh("find /Users/runner/work/IOS-Laughing-Drops -maxdepth 4 -type d -print")
-sh("echo '🔍 XCODE PROJECTS:'")
-sh("find /Users/runner/work/IOS-Laughing-Drops -name '*.xcodeproj' || true")
-sh("echo '🔍 XCWORKSPACE:'")
-sh("find /Users/runner/work/IOS-Laughing-Drops -name '*.xcworkspace' || true")
-
-
-sh("echo '🔍 Search .xcodeproj:'")
-sh("find /Users/runner/work/IOS-Laughing-Drops/IOS-Laughing-Drops -name '*.xcodeproj' || true")
-
-sh("echo '🔍 Search Podfile:'")
-sh("find /Users/runner/work/IOS-Laughing-Drops/IOS-Laughing-Drops -name 'Podfile' || true")
-
 
     UI.message "🏗️ Starting build_app..."
-    build_app(
-      workspace: workspace_path,
-      scheme: "LaughingDrops",
-      configuration: "Release",
-      clean: true
-    )
+    build_app(workspace_path)
 
     UI.message "🔑 Setting up ASC API key again before upload"
     app_store_connect_api_key(
