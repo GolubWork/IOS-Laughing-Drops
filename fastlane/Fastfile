@@ -231,37 +231,17 @@ ENV["FASTLANE_XCODEBUILD_SETTINGS_RETRIES"] = "3"
 
 UI.message "🏗️ Starting build_app..."
 
-if workspace_path
-  UI.message "🛠️ Using workspace for build"
-  UI.message "📂 workspace_path=#{workspace_path}"
-  UI.message "📄 scheme=#{scheme}"
-  UI.message "⚙️ configuration=Release, clean=true"
+build_app(
+  workspace: workspace_path,
+  scheme: scheme,
+  configuration: "Release",
+  clean: true,
+  export_method: "app-store",
+  verbose: true,                       # подробный лог
+  build_path: "./build",
+  xcargs: "ONLY_ACTIVE_ARCH=NO ENABLE_BITCODE=NO -showBuildTimingSummary" # показать тайминги и сборку всех архитектур
+)
 
-  build_app(
-    workspace: workspace_path,
-    scheme: scheme,
-    configuration: "Release",
-    clean: true,
-    export_method: "app-store",
-    verbose: true,                     
-    build_path: "./build"              
-  )
-else
-  UI.message "🛠️ Using project for build"
-  UI.message "📂 project_path=#{project_path}"
-  UI.message "📄 scheme=#{scheme}"
-  UI.message "⚙️ configuration=Release, clean=true"
-
-  build_app(
-    project: project_path,
-    scheme: scheme,
-    configuration: "Release",
-    clean: true,
-    export_method: "app-store",
-    verbose: true,
-    build_path: "./build"
-  )
-end
 
 UI.message "✅ build_app finished"
 
