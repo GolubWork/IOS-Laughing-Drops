@@ -1,75 +1,294 @@
-lane :build do
-  UI.message "🚀 BUILD STARTED"
+org, repo             = (ENV["GITHUB_REPOSITORY"] || "").split("/")
+match_org, match_repo = (ENV["MATCH_REPOSITORY"]  || "").split("/")
 
-  # Настройка CI
-  setup_ci
-  sync_certificates
-
-  # Очистка
-  UI.message "🧹 Cleaning DerivedData and Pods..."
-  sh("rm -rf ~/Library/Developer/Xcode/DerivedData")
-  sh("rm -rf Pods")
-  sh("rm -rf Podfile.lock")
-  cocoapods(clean_install: true)
-
-  ENV["SWIFT_OPTIMIZATION_LEVEL"] = "-Onone"
-
-  # Xcode info
-  UI.message "🛠️ Xcode path: #{`xcode-select -p`.strip}"
-  UI.message "🛠️ Xcode version: #{`xcodebuild -version`.strip}"
-
-  # Paths
-  repo_root = File.expand_path("..", __dir__)
-  workspace_path = Dir[File.join(repo_root, "**/*.xcworkspace")].reject { |p| p.include?(".xcodeproj/") }.first
-  project_path   = Dir[File.join(repo_root, "**/*.xcodeproj")].first if workspace_path.nil?
-  scheme         = ENV["IOS_SCHEME"] || ENV["PROJECT_NAME"]
-
-  UI.message "📌 workspace_path=#{workspace_path}, project_path=#{project_path}, scheme=#{scheme}"
-
-  # Auto increment build number
-  main_bundle = ENV["IOS_BUNDLE_ID"]
-  ci_build = ENV["BUILD_NUMBER"].to_i
-  latest_store_build = app_store_build_number(app_identifier: main_bundle) rescue 0
-  next_build = [latest_store_build + 1, ci_build, 1].max
-  increment_build_number(xcodeproj: project_path, build_number: next_build)
-  set_info_plist_value(path: "LaughingDrops/LaughingDrops/GoogleService-Info.plist", key: "CFBundleVersion", value: next_build.to_s) rescue nil
-
-  # Build
-  UI.message "🏗️ Starting build_app..."
-  build_app(
-    workspace: workspace_path,
-    scheme: scheme,
-    configuration: "Release",
-    clean: true,
-    export_method: "app-store",
-    verbose: true,
-    build_path: "./build",
-    xcargs: "ONLY_ACTIVE_ARCH=NO ENABLE_BITCODE=NO -showBuildTimingSummary"
-  )
-
-  UI.message "✅ build_app finished"
-
-  # Upload
-  ipa_output_dir = File.join(repo_root, "build/iOS/ipa_out")
-  ipa_path = Dir[File.join(ipa_output_dir, "*.ipa")].first
-  UI.user_error!("❌ IPA не найден!") if ipa_path.nil?
-
-  if ENV["UPLOAD_TO_TESTFLIGHT"] == "1" || ENV["UPLOAD_CHANNEL"] == "beta"
-    UI.message "🚀 Uploading to TestFlight"
-    upload_to_testflight(ipa: ipa_path, skip_waiting_for_build_processing: true, changelog: ENV["CHANGELOG"] || "Auto-upload from CI")
-  else
-    UI.message "🚀 Uploading to App Store"
-    upload_to_app_store(
-      ipa: ipa_path,
-      submit_for_review: false,
-      automatic_release: false,
-      force: true,
-      skip_screenshots: true,
-      skip_metadata: true,
-      run_precheck_before_submit: false,
-      app_identifier: main_bundle
+platform :ios do
+  lane :init_ci do
+    UI.message "🔧 INIT_CI: org=#{org}, repo=#{repo}, match_org=#{match_org}, match_repo=#{match_repo}"
+    github_action(
+      api_token:  ENV["GH_PAT"],
+      org:        org,
+      repo:       repo,
+      match_org:  match_org,
+      match_repo: match_repo,
+      writable_deploy_key: true
     )
   end
 
-  UI.success("🎉 Билд загружен в App Store Connect!")
+lane :sync_certificates do
+  UI.message "🔐 SYNC_CERTIFICATES: start"
+  UI.message "🔐 API KEY ID: #{ENV["APPSTORE_KEY_ID"]}"
+  UI.message "🔐 ISSUER ID: #{ENV["APPSTORE_ISSUER_ID"]}"
+
+  app_store_connect_api_key(
+    key_id:      ENV["APPSTORE_KEY_ID"],
+    issuer_id:   ENV["APPSTORE_ISSUER_ID"],
+    key_content: ENV["APPSTORE_P8"]
+  )
+
+  main_app_bundle_id = ENV["IOS_BUNDLE_ID"]
+  extension_bundle_id = "#{ENV["IOS_BUNDLE_ID"]}.backgroundnotifications"
+  UI.message "🔐 MAIN BUNDLE: #{main_app_bundle_id}"
+  UI.message "🔐 EXT BUNDLE: #{extension_bundle_id}"
+
+  begin
+    match(
+      type: "appstore",
+      storage_mode: "git",
+      git_url: "git@github.com:#{match_org}/#{match_repo}.git",
+      app_identifier: [main_app_bundle_id, extension_bundle_id],
+      readonly: false
+    )
+  rescue => e
+    UI.important("⚠️ Failed to sync certificates, trying to recreate...")
+    match(
+      type: "appstore",
+      storage_mode: "git",
+      git_url: "git@github.com:#{match_org}/#{match_repo}.git",
+      app_identifier: [main_app_bundle_id, extension_bundle_id],
+      readonly: false,
+      force_for_new_devices: true
+    )
+  end
+
+  UI.message "🔐 SYNC_CERTIFICATES: done"
+end
+
+
+  lane :build do
+    UI.message "🚀 BUILD STARTED"
+    setup_ci
+
+    UI.message "🔧 Calling sync_certificates"
+    sync_certificates
+
+    UI.message "📂 Running ls -la"
+    sh("ls -la")
+
+    UI.message "📦 Running Cocoapods"
+    cocoapods(clean_install: true)
+
+    UI.message "🔍 Parsing ENV for paths"
+    scheme          = (ENV["IOS_SCHEME"] || ENV["PROJECT_NAME"]).to_s.strip
+    workspace_input = (ENV["XCODE_WORKSPACE"] || "").to_s.strip
+    project_input   = (ENV["XCODE_PROJECT"]   || "").to_s.strip
+    project_input   = "#{ENV["PROJECT_NAME"]}.xcodeproj" if project_input.empty? && !ENV["PROJECT_NAME"].to_s.empty?
+
+    UI.message "🔍 scheme=#{scheme}"
+    UI.message "🔍 workspace_input=#{workspace_input}"
+    UI.message "🔍 project_input=#{project_input}"
+
+    repo_root = File.expand_path("..", __dir__)
+    UI.message "📁 repo_root=#{repo_root}"
+
+    workspace_path = workspace_input.empty? ? nil : File.expand_path(workspace_input, repo_root)
+    project_path   = project_input.empty?   ? nil : File.expand_path(project_input,   repo_root)
+
+    UI.message "🧭 Calculated workspace_path=#{workspace_path}"
+    UI.message "🧭 Calculated project_path=#{project_path}"
+
+    if workspace_path.nil? && project_path.nil?
+      UI.message "🔎 Searching for workspace/project in repo_root"
+      found_ws = Dir[File.join(repo_root, "*.xcworkspace")].first
+      found_pr = Dir[File.join(repo_root, "*.xcodeproj")].first
+      UI.message "🔎 found_ws=#{found_ws}"
+      UI.message "🔎 found_pr=#{found_pr}"
+      workspace_path = found_ws if found_ws
+      project_path   = found_pr if found_pr
+    end
+
+    UI.message "📌 Final workspace_path=#{workspace_path}"
+    UI.message "📌 Final project_path=#{project_path}"
+
+    UI.user_error!("❌ Не найден workspace или project") if workspace_path.nil? && project_path.nil?
+    UI.user_error!("❌ Не указана схема") if scheme.empty?
+
+    UI.message "📂 Using scheme: #{scheme}"
+    UI.message "📂 Using workspace: #{workspace_path}" if workspace_path
+    UI.message "📂 Using project: #{project_path}" if project_path
+
+    # ==== автоинкремент CFBundleVersion ====
+    UI.message "🧮 Auto-increment CFBundleVersion start"
+    main_bundle = ENV["IOS_BUNDLE_ID"]
+    UI.message "🧮 main_bundle=#{main_bundle}"
+
+    api_key_hash = {
+      key_id: ENV["APPSTORE_KEY_ID"],
+      issuer_id: ENV["APPSTORE_ISSUER_ID"],
+      key_content: ENV["APPSTORE_P8"]
+    }
+
+    latest_store_build = (
+      begin
+        UI.message "🧮 Requesting App Store build number..."
+        app_store_build_number(app_identifier: main_bundle, api_key: api_key_hash)
+      rescue => e
+        UI.message "⚠️ Failed to fetch store build number: #{e}"
+        0
+      end
+    ).to_i
+
+    ci_build   = ENV["BUILD_NUMBER"].to_i
+    next_build = [latest_store_build + 1, ci_build, 1].max
+
+    UI.message "🧮 latest_store_build=#{latest_store_build}"
+    UI.message "🧮 ci_build=#{ci_build}"
+    UI.message "🧮 next_build=#{next_build}"
+
+    UI.message "🧮 Updating Info.plist and xcodeproj"
+    auto_xcodeproj = project_path || Dir[File.join(repo_root, "*.xcodeproj")].first
+    UI.message "🧮 auto_xcodeproj=#{auto_xcodeproj}"
+
+    main_info_plist = Dir[File.join(repo_root, "LaughingDrops", "LaughingDrops", "GoogleService-Info.plist")].first
+    UI.message "🧮 main_info_plist=#{main_info_plist}"
+
+    if auto_xcodeproj && File.exist?(auto_xcodeproj)
+      UI.message "🧮 increment_build_number -> #{next_build}"
+      increment_build_number(xcodeproj: auto_xcodeproj, build_number: next_build)
+      if main_info_plist && File.exist?(main_info_plist)
+        UI.message "🧮 updating main_info_plist CFBundleVersion"
+        set_info_plist_value(path: main_info_plist, key: "CFBundleVersion", value: next_build.to_s)
+      end
+    end
+
+    ext_info_plist = Dir[File.join(repo_root, "backgroundnotifications", "**/GoogleService-Info.plist")].first
+    UI.message "🧮 ext_info_plist=#{ext_info_plist}"
+
+    if ext_info_plist && File.exist?(ext_info_plist)
+      UI.message "🧮 updating ext_info_plist CFBundleVersion"
+      set_info_plist_value(path: ext_info_plist, key: "CFBundleVersion", value: next_build.to_s)
+    end
+
+    # ==== конец автоинкремента ====
+
+    UI.message "🔏 Preparing code signing"
+    ext_bundle   = "#{main_bundle}.backgroundnotifications"
+    main_team_id = ENV["sigh_#{main_bundle}_appstore_team-id"]
+    main_profile = ENV["sigh_#{main_bundle}_appstore_profile-name"]
+    ext_profile  = ENV["sigh_#{ext_bundle}_appstore_profile-name"]
+
+    UI.message "🔏 main_team_id=#{main_team_id}"
+    UI.message "🔏 main_profile=#{main_profile}"
+    UI.message "🔏 ext_profile=#{ext_profile}"
+
+    main_target  = ENV["IOS_MAIN_TARGET"].to_s.empty? ? scheme : ENV["IOS_MAIN_TARGET"]
+    notif_target = ENV["IOS_NOTIF_TARGET"].to_s.empty? ? "backgroundnotifications" : ENV["IOS_NOTIF_TARGET"]
+
+    UI.message "🎯 main_target=#{main_target}"
+    UI.message "🎯 notif_target=#{notif_target}"
+
+    UI.message "🔧 Updating code signing settings"
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      team_id: main_team_id,
+      code_sign_identity: "Apple Distribution",
+      path: workspace_path,
+      targets: main_target,
+      profile_name: main_profile
+    )
+
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      team_id: main_team_id,
+      code_sign_identity: "Apple Distribution",
+      path: workspace_path,
+      targets: notif_target,
+      profile_name: ext_profile
+    )
+
+    provisioning_profiles = {}
+    provisioning_profiles[main_bundle] = main_profile
+    provisioning_profiles[ext_bundle]  = ext_profile
+
+    UI.message "📦 provisioningProfiles=#{provisioning_profiles}"
+
+    ipa_output_dir = File.join(repo_root, "build/iOS/ipa_out")
+    UI.message "📦 ipa_output_dir=#{ipa_output_dir}"
+
+    UI.message "🔍 Searching for .xcworkspace explicitly"
+    workspace_path = Dir[File.join(repo_root, "**/*.xcworkspace")].reject { |p| p.include?(".xcodeproj/") }.first
+    project_path = Dir[File.join(repo_root, "**/*.xcodeproj")].first if workspace_path.nil?
+    workspaceOrProject = workspace_path ? workspace_path : project_path
+
+
+UI.message "⚙️ Fastlane iOS Build Started"
+
+# Проверка версии Xcode
+xcode_version = `xcode-select -p`.strip
+UI.message "🛠️ Xcode path: #{xcode_version}"
+
+xcode_build_version = `xcodebuild -version`.strip
+UI.message "🛠️ Xcode version info:\n#{xcode_build_version}"
+
+# Очистка DerivedData
+UI.message "🧹 Cleaning DerivedData..."
+derived_data_path = "~/Library/Developer/Xcode/DerivedData"
+sh("rm -rf #{derived_data_path}")
+UI.message "✅ DerivedData cleaned"
+
+# Таймаут и повторные попытки для xcodebuild
+ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
+ENV["FASTLANE_XCODEBUILD_SETTINGS_RETRIES"] = "3"
+
+UI.message "⚙️ Cleaning pods"
+rm -rf ~/Library/Developer/Xcode/DerivedData
+rm -rf Pods
+rm -rf Podfile.lock
+pod install
+
+ENV["SWIFT_OPTIMIZATION_LEVEL"] = "-Onone"
+
+UI.message "🏗️ Starting build_app..."
+
+build_app(
+  workspace: workspace_path,
+  scheme: scheme,
+  configuration: "Release",
+  clean: true,
+  export_method: "app-store",
+  verbose: true,                       # подробный лог
+  build_path: "./build",
+  xcargs: "ONLY_ACTIVE_ARCH=NO ENABLE_BITCODE=NO -showBuildTimingSummary" # показать тайминги и сборку всех архитектур
+)
+
+
+UI.message "✅ build_app finished"
+
+UI.message "✅ build_app finished"
+
+
+
+    UI.message "🔑 Setting up ASC API key again before upload"
+    app_store_connect_api_key(
+      key_id:      ENV["APPSTORE_KEY_ID"],
+      issuer_id:   ENV["APPSTORE_ISSUER_ID"],
+      key_content: ENV["APPSTORE_P8"]
+    )
+
+    ipa_path = Dir[File.join(ipa_output_dir, "*.ipa")].first
+    UI.message "📦 ipa_path=#{ipa_path}"
+    UI.user_error!("❌ IPA не найден!") if ipa_path.nil?
+
+    if ENV["UPLOAD_TO_TESTFLIGHT"] == "1" || ENV["UPLOAD_CHANNEL"] == "beta"
+      UI.message "🚀 Uploading to TestFlight"
+      upload_to_testflight(
+        ipa: ipa_path,
+        skip_waiting_for_build_processing: true,
+        changelog: (ENV["CHANGELOG"] || "Auto-upload from CI")
+      )
+    else
+      UI.message "🚀 Uploading to App Store"
+      upload_to_app_store(
+        ipa: ipa_path,
+        submit_for_review: false,
+        automatic_release: false,
+        force: true,
+        skip_screenshots: true,
+        skip_metadata: true,
+        run_precheck_before_submit: false,
+        app_identifier: ENV["IOS_BUNDLE_ID"]
+      )
+    end
+
+    UI.success("🎉 Билд загружен в App Store Connect!")
+  end
 end
