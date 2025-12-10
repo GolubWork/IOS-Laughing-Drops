@@ -205,6 +205,20 @@ sh("ls #{File.join(repo_root, '*.xcworkspace')} || true")
 sh("echo '📁 SEARCH xcschemes:'")
 sh("find #{repo_root} -name '*.xcscheme' || true")
 
+sh("echo '📁 FULL REPO STRUCTURE:'")
+sh("find /Users/runner/work/IOS-Laughing-Drops -maxdepth 4 -type d -print")
+sh("echo '🔍 XCODE PROJECTS:'")
+sh("find /Users/runner/work/IOS-Laughing-Drops -name '*.xcodeproj' || true")
+sh("echo '🔍 XCWORKSPACE:'")
+sh("find /Users/runner/work/IOS-Laughing-Drops -name '*.xcworkspace' || true")
+
+
+sh("echo '🔍 Search .xcodeproj:'")
+sh("find /Users/runner/work/IOS-Laughing-Drops/IOS-Laughing-Drops -name '*.xcodeproj' || true")
+
+sh("echo '🔍 Search Podfile:'")
+sh("find /Users/runner/work/IOS-Laughing-Drops/IOS-Laughing-Drops -name 'Podfile' || true")
+
 
     UI.message "🏗️ Starting build_app..."
     build_app(
