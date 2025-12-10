@@ -209,9 +209,10 @@ end
     project_path = Dir[File.join(repo_root, "**/*.xcodeproj")].first if workspace_path.nil?
     workspaceOrProject = workspace_path ? workspace_path : project_path
 
+UI.message "Update Timeout"
+ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
+ENV["FASTLANE_XCODEBUILD_SETTINGS_RETRIES"] = "3"
 
-
-    UI.message "🏗️ Starting build_app..."
 UI.message "🏗️ Starting build_app..."
 
 if workspace_path
