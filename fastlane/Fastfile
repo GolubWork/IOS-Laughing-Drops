@@ -229,13 +229,6 @@ UI.message "✅ DerivedData cleaned"
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
 ENV["FASTLANE_XCODEBUILD_SETTINGS_RETRIES"] = "3"
 
-UI.message "⚙️ Cleaning pods"
-rm -rf ~/Library/Developer/Xcode/DerivedData
-rm -rf Pods
-rm -rf Podfile.lock
-pod install
-
-ENV["SWIFT_OPTIMIZATION_LEVEL"] = "-Onone"
 
 UI.message "🏗️ Starting build_app..."
 
