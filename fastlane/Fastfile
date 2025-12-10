@@ -193,6 +193,15 @@ platform :ios do
     UI.message "🔍 Searching for .xcworkspace explicitly"
     workspace_path = Dir[File.join(repo_root, "*.xcworkspace")].first
     UI.message "📂 FINAL workspace_path=#{workspace_path}"
+    
+sh("echo '📁 LIST ROOT:'")
+sh("ls -R .")
+
+sh("echo '📁 WORKSPACE:'")
+sh("ls *.xcworkspace")
+
+sh("echo '📁 XCSCHEMES:'")
+sh("find . -name '*.xcscheme'")
 
     UI.message "🏗️ Starting build_app..."
     build_app(
