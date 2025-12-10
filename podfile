@@ -1,21 +1,27 @@
-platform :ios, '16.4'
+platform :ios, '12.0'
+use_frameworks!
 
 target 'LaughingDrops' do
-  use_frameworks!
   pod 'AppsFlyerFramework'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
-  pod 'Firebase/RemoteConfig'  
-  
-  
-    post_install do |installer|
-      installer.pods_project.targets.each do |target|
-        target.build_configurations.each do |config|
-          # включаем DEBUG для Swift и выводим дополнительные флаги
-          config.build_settings['OTHER_SWIFT_FLAGS'] ||= '$(inherited)'
-          config.build_settings['OTHER_SWIFT_FLAGS'] += ' -DDEBUG'
-          config.build_settings['SWIFT_ACTIVE_COMPILATION_CONDITIONS'] ||= 'DEBUG'
-        end
+  pod 'Firebase/RemoteConfig'
+
+  # Post install fix для CI и Swift модулей
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        # DEBUG флаги
+        config.build_settings['OTHER_SWIFT_FLAGS'] ||= '$(inherited)'
+        config.build_settings['OTHER_SWIFT_FLAGS'] += ' -DDEBUG'
+        config.build_settings['SWIFT_ACTIVE_COMPILATION_CONDITIONS'] ||= 'DEBUG'
+
+        # Исключаем arm64 для симулятора, чтобы избежать Embed Pods Frameworks
+        config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
+
+        # Оптимизация для CI (чтобы Previews не ломались)
+        config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Onone'
       end
     end
   end
+end
