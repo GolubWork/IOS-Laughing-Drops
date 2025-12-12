@@ -1,4 +1,4 @@
-platform :ios, '15.6'
+platform :ios, '11.0'
 
 target 'LaughingDrops' do
   use_frameworks!
@@ -6,4 +6,5 @@ target 'LaughingDrops' do
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
   pod 'Firebase/RemoteConfig'  
+  
 end

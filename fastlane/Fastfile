@@ -209,37 +209,42 @@ end
     project_path = Dir[File.join(repo_root, "**/*.xcodeproj")].first if workspace_path.nil?
     workspaceOrProject = workspace_path ? workspace_path : project_path
 
-UI.message "Update Timeout"
+
+UI.message "⚙️ Fastlane iOS Build Started"
+
+# Проверка версии Xcode
+xcode_version = `xcode-select -p`.strip
+UI.message "🛠️ Xcode path: #{xcode_version}"
+
+xcode_build_version = `xcodebuild -version`.strip
+UI.message "🛠️ Xcode version info:\n#{xcode_build_version}"
+
+# Очистка DerivedData
+UI.message "🧹 Cleaning DerivedData..."
+derived_data_path = "~/Library/Developer/Xcode/DerivedData"
+sh("rm -rf #{derived_data_path}")
+UI.message "✅ DerivedData cleaned"
+
+# Таймаут и повторные попытки для xcodebuild
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
 ENV["FASTLANE_XCODEBUILD_SETTINGS_RETRIES"] = "3"
 
+
 UI.message "🏗️ Starting build_app..."
 
-if workspace_path
-  UI.message "🛠️ Using workspace for build"
-  UI.message "📂 workspace_path=#{workspace_path}"
-  UI.message "📄 scheme=#{scheme}"
-  UI.message "⚙️ configuration=Release, clean=true"
+build_app(
+  workspace: workspace_path,
+  scheme: scheme,
+  configuration: "Release",
+  clean: true,
+  export_method: "app-store",
+  verbose: true,                       # подробный лог
+  build_path: "./build",
+  xcargs: "ONLY_ACTIVE_ARCH=NO ENABLE_BITCODE=NO -showBuildTimingSummary" # показать тайминги и сборку всех архитектур
+)
 
-  build_app(
-    workspace: workspace_path,
-    scheme: scheme,
-    configuration: "Release",
-    clean: true
-  )
-else
-  UI.message "🛠️ Using project for build"
-  UI.message "📂 project_path=#{project_path}"
-  UI.message "📄 scheme=#{scheme}"
-  UI.message "⚙️ configuration=Release, clean=true"
 
-  build_app(
-    project: project_path,
-    scheme: scheme,
-    configuration: "Release",
-    clean: true
-  )
-end
+UI.message "✅ build_app finished"
 
 UI.message "✅ build_app finished"
 
