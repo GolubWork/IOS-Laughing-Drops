@@ -13,8 +13,8 @@ jobs:
       - name: Set up Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '16.3.0'
-
+            xcode-version: '16.3.0'
+        
       - name: Set up ruby env
         uses: ruby/setup-ruby@v1.269.0
         with:
@@ -23,7 +23,7 @@ jobs:
 
       - name: Generate MATCH_GIT_BASIC_AUTHORIZATION
         run: |
-          echo -n "GolubWork:${GH_PAT}" | base64 > base64.txt
+          echo -n "NikDyr:${GH_PAT}" | base64 > base64.txt
           echo "MATCH_GIT_BASIC_AUTHORIZATION=$(cat base64.txt)" >> $GITHUB_ENV
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
@@ -36,3 +36,8 @@ jobs:
           ASC_KEY: ${{ secrets.APPSTORE_P8 }}
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ env.MATCH_GIT_BASIC_AUTHORIZATION }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          TEAM_ID: ${{ vars.APPLE_TEAM_ID }}
+          BUNDLE_IDENTIFIER: ${{ vars.BUNDLE_IDENTIFIER }}
+          MATCH_GIT_URL: ${{ vars.MATCH_GIT_URL }}
+          LAST_UPLOADED_BUILD_NUMBER: ${{ vars.LAST_UPLOADED_BUILD_NUMBER }}
+          XC_TARGET_NAME: ${{ vars.XC_TARGET_NAME }}
