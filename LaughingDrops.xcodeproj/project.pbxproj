@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1E7792E8596F862415C94AC1 /* Pods_LaughingDrops.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DDAAB5FCD0B00593E138363 /* Pods_LaughingDrops.framework */; };
 		C4251E072EE194B000CD6F2C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4251E062EE194B000CD6F2C /* GoogleService-Info.plist */; };
 		C4251F9E2EEC2FFD00CD6F2C /* notifications.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C4251F972EEC2FFD00CD6F2C /* notifications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -37,16 +36,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		13E6BD44262C3DB3FE162DE7 /* Pods-LaughingDrops.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LaughingDrops.release.xcconfig"; path = "Target Support Files/Pods-LaughingDrops/Pods-LaughingDrops.release.xcconfig"; sourceTree = "<group>"; };
-		291DE0DCB232BCDF38C1AE6A /* Pods-LaughingDrops.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LaughingDrops.debug.xcconfig"; path = "Target Support Files/Pods-LaughingDrops/Pods-LaughingDrops.debug.xcconfig"; sourceTree = "<group>"; };
-		8DDAAB5FCD0B00593E138363 /* Pods_LaughingDrops.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LaughingDrops.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4251DD42EE193B600CD6F2C /* LaughingDrops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LaughingDrops.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4251E062EE194B000CD6F2C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C4251F972EEC2FFD00CD6F2C /* notifications.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = notifications.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		C4251FA22EEC2FFD00CD6F2C /* Exceptions for "notifications" folder in "notifications" target */ = {
+		C4251FA22EEC2FFD00CD6F2C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -56,21 +52,8 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		C4251DD62EE193B600CD6F2C /* LaughingDrops */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			path = LaughingDrops;
-			sourceTree = "<group>";
-		};
-		C4251F982EEC2FFD00CD6F2C /* notifications */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				C4251FA22EEC2FFD00CD6F2C /* Exceptions for "notifications" folder in "notifications" target */,
-			);
-			path = notifications;
-			sourceTree = "<group>";
-		};
+		C4251DD62EE193B600CD6F2C /* LaughingDrops */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LaughingDrops; sourceTree = "<group>"; };
+		C4251F982EEC2FFD00CD6F2C /* notifications */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (C4251FA22EEC2FFD00CD6F2C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = notifications; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +61,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E7792E8596F862415C94AC1 /* Pods_LaughingDrops.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,8 +81,6 @@
 				C4251F982EEC2FFD00CD6F2C /* notifications */,
 				C4251DD52EE193B600CD6F2C /* Products */,
 				C4251E062EE194B000CD6F2C /* GoogleService-Info.plist */,
-				FE3FA8A5B83B504BF5418E4F /* Pods */,
-				EC0088434E65E6384EA5FB15 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,24 +93,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		EC0088434E65E6384EA5FB15 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				8DDAAB5FCD0B00593E138363 /* Pods_LaughingDrops.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		FE3FA8A5B83B504BF5418E4F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				291DE0DCB232BCDF38C1AE6A /* Pods-LaughingDrops.debug.xcconfig */,
-				13E6BD44262C3DB3FE162DE7 /* Pods-LaughingDrops.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -138,12 +100,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C4251DF82EE193BC00CD6F2C /* Build configuration list for PBXNativeTarget "LaughingDrops" */;
 			buildPhases = (
-				FCD6A7BB1A4275B72737BEE0 /* [CP] Check Pods Manifest.lock */,
 				C4251DD02EE193B600CD6F2C /* Sources */,
 				C4251DD12EE193B600CD6F2C /* Frameworks */,
 				C4251DD22EE193B600CD6F2C /* Resources */,
 				C4251F9F2EEC2FFD00CD6F2C /* Embed Foundation Extensions */,
-				B4A9E53670F5B18E5F0028F8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -154,6 +114,8 @@
 				C4251DD62EE193B600CD6F2C /* LaughingDrops */,
 			);
 			name = LaughingDrops;
+			packageProductDependencies = (
+			);
 			productName = LaughingDrops;
 			productReference = C4251DD42EE193B600CD6F2C /* LaughingDrops.app */;
 			productType = "com.apple.product-type.application";
@@ -174,6 +136,8 @@
 				C4251F982EEC2FFD00CD6F2C /* notifications */,
 			);
 			name = notifications;
+			packageProductDependencies = (
+			);
 			productName = notifications;
 			productReference = C4251F972EEC2FFD00CD6F2C /* notifications.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -197,6 +161,7 @@
 				};
 			};
 			buildConfigurationList = C4251DCF2EE193B600CD6F2C /* Build configuration list for PBXProject "LaughingDrops" */;
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -205,7 +170,8 @@
 			);
 			mainGroup = C4251DCB2EE193B600CD6F2C;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
+			packageReferences = (
+			);
 			productRefGroup = C4251DD52EE193B600CD6F2C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -233,48 +199,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		B4A9E53670F5B18E5F0028F8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LaughingDrops/Pods-LaughingDrops-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LaughingDrops/Pods-LaughingDrops-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LaughingDrops/Pods-LaughingDrops-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FCD6A7BB1A4275B72737BEE0 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-LaughingDrops-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C4251DD02EE193B600CD6F2C /* Sources */ = {
@@ -423,7 +347,6 @@
 		};
 		C4251DF92EE193BC00CD6F2C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 291DE0DCB232BCDF38C1AE6A /* Pods-LaughingDrops.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -457,7 +380,6 @@
 		};
 		C4251DFA2EE193BC00CD6F2C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 13E6BD44262C3DB3FE162DE7 /* Pods-LaughingDrops.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
