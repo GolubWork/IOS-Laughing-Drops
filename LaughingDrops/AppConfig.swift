@@ -8,9 +8,9 @@ final class AppConfig {
 
     let serverURL: String = "https://laughingdropspop.com/config.php"
     let os: String = "iOS"
-    let storeId: String = "6755782818"
-    let firebaseProjectId: String = "394028193890"
-    let appsFlyerDevKey: String = "HCDMv9VHACXw5TboDN5iL8"
+    let storeId: String = "6756708872"
+    let firebaseProjectId: String = "662865312172"
+    let appsFlyerDevKey: String = "zjmEk65LDPa3K8s4BWnpfA"
 
     
     
