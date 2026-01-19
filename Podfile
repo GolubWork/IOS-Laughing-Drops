@@ -1,4 +1,4 @@
-platform :ios, '13.0'
+platform :ios, '16.0'
 
 # Fix for Xcode 16 "Multiple commands produce" error
 install! 'cocoapods', 
@@ -21,9 +21,9 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-      # Set minimum iOS deployment target to 13.0 (required for SwiftUI)
-      if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < 13.0
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+      # Set minimum iOS deployment target to 16.0 (required for SwiftUI + Charts)
+      if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < 16.0
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
       end
       
       # Fix for Xcode 16: disable parallel building to avoid duplicate output errors
