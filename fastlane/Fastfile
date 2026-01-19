@@ -4,6 +4,12 @@ platform :ios do
 
   before_all do
     ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
+    
+    # Install CocoaPods dependencies
+    cocoapods(
+      clean_install: true,
+      repo_update: true
+    )
   end
 
   desc "Load ASC API Key information to use in subsequent lanes"
