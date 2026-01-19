@@ -71,7 +71,7 @@ platform :ios do
       ) 
       build_app(
         scheme: ENV["XC_TARGET_NAME"],
-        xcargs: "-allowProvisioningUpdates -IDEBuildOperationSkipResolvingSimulatorRuntimes=YES",
+        xcargs: "-allowProvisioningUpdates ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS=NO",
         export_team_id: ENV["TEAM_ID"],
         verbose: true
       )
