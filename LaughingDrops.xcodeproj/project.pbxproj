@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -160,9 +160,9 @@
 					};
 				};
 			};
-			buildConfigurationList = C4251DCF2EE193B600CD6F2C /* Build configuration list for PBXProject "LaughingDrops" */;
-			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+		buildConfigurationList = C4251DCF2EE193B600CD6F2C /* Build configuration list for PBXProject "LaughingDrops" */;
+		compatibilityVersion = "Xcode 16.0";
+		developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
