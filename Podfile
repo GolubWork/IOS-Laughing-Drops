@@ -14,7 +14,7 @@ target 'LaughingDrops' do
   
   # Notification Service Extension target
   target 'notifications' do
-    inherit! :complete
+    inherit! :search_paths
   end
 end
 
