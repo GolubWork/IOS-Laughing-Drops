@@ -5,6 +5,11 @@ target 'LaughingDrops' do
   pod 'AppsFlyerFramework'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
-  pod 'Firebase/RemoteConfig'  
+  pod 'Firebase/RemoteConfig'
   
+  # Notification Service Extension target
+  target 'notifications' do
+    inherit! :search_paths
+    pod 'Firebase/Messaging'
+  end
 end
