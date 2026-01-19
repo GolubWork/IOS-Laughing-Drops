@@ -28,6 +28,9 @@ post_install do |installer|
       
       # Fix for Xcode 16: disable parallel building to avoid duplicate output errors
       config.build_settings['DISABLE_MANUAL_TARGET_ORDER_BUILD_WARNING'] = 'YES'
+      
+      # Fix sandbox error: disable user script sandboxing (more reliable than static linkage)
+      config.build_settings['ENABLE_USER_SCRIPT_SANDBOXING'] = 'NO'
     end
   end
   
@@ -35,4 +38,5 @@ post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
     config.build_settings['DISABLE_MANUAL_TARGET_ORDER_BUILD_WARNING'] = 'YES'
   end
+  
 end
