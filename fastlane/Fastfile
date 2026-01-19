@@ -71,7 +71,7 @@ platform :ios do
       ) 
       build_app(
         scheme: ENV["XC_TARGET_NAME"],
-        xcargs: "-allowProvisioningUpdates",
+        xcargs: "-allowProvisioningUpdates -sdk iphoneos",
         export_team_id: ENV["TEAM_ID"],
         verbose: true
       )
