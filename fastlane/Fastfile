@@ -71,7 +71,9 @@ platform :ios do
       ) 
       build_app(
         scheme: ENV["XC_TARGET_NAME"],
-        xcargs: "-allowProvisioningUpdates -sdk iphoneos",
+        skip_build_archive: false,
+        xcargs: "-allowProvisioningUpdates ASSETCATALOG_COMPILER_SKIP_APP_STORE_DEPLOYMENT=NO ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS=NO",
+        sdk: "iphoneos",
         export_team_id: ENV["TEAM_ID"],
         verbose: true
       )
