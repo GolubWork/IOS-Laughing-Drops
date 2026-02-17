@@ -1,10 +1,14 @@
 import SwiftUI
 
+/// <summary>
+/// Main application entry point. Initializes the app delegate, view models,
+/// and launches the root view with necessary environment objects.
+/// </summary>
 @main
 struct LaughingDropsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject var appVM = AppViewModel()
-    @StateObject var history = HistoryStore() 
+    @StateObject var history = HistoryStore()
 
     var body: some Scene {
         WindowGroup {
@@ -18,6 +22,9 @@ struct LaughingDropsApp: App {
     }
 }
 
+/// <summary>
+/// Root view that switches between different screens based on the application's state.
+/// </summary>
 struct RootView: View {
     @EnvironmentObject var appVM: AppViewModel
 

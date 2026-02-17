@@ -1,6 +1,9 @@
 import SwiftUI
-import UserNotifications
 
+/// <summary>
+/// First launch screen that prompts the user to allow push notifications
+/// and provides navigation to the web content if skipped or after permission is granted.
+/// </summary>
 struct FirstLaunchScreen: View {
     let url: URL
     @State private var navigateToWeb = false
@@ -22,17 +25,14 @@ struct FirstLaunchScreen: View {
 
             VStack(spacing: 0) {
 
-                Spacer()   // ← Центрирует логотип
+                Spacer()
 
-                // ЛОГО — строго по центру
                 Image("logo")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 250, height: 250)
 
-                Spacer()   // ← Новый spacer, который опускает весь UI СИЛЬНО вниз
-
-                // >>> ВСЁ ЧТО НИЖЕ ЛОГО И ЕЩЁ НИЖЕ <<<
+                Spacer()
 
                 VStack(spacing: 24) {
 
@@ -74,7 +74,7 @@ struct FirstLaunchScreen: View {
                     }
                 }
 
-                Spacer(minLength: 70)   // ← кнопка Skip почти касается нижнего края
+                Spacer(minLength: 70)
             }
         }
         .fullScreenCover(isPresented: $navigateToWeb) {
@@ -82,11 +82,11 @@ struct FirstLaunchScreen: View {
         }
     }
 
+    /// <summary>
+    /// Requests push notification permission from the user and navigates to the web screen.
+    /// </summary>
     private func requestPushPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(
-            options: [.alert, .sound, .badge]
-        ) { _, _ in
-            DispatchQueue.main.async { navigateToWeb = true }
-        }
+        NotificationAuthorizationManager.shared.requestSystemPermission()
+        DispatchQueue.main.async { navigateToWeb = true }
     }
 }

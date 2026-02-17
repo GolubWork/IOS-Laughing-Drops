@@ -1,6 +1,13 @@
 import SwiftUI
 
+/// <summary>
+/// Screen displayed when there is no internet connection,
+/// showing a message and allowing the user to retry.
+/// </summary>
 struct NoInternetScreen: View {
+    /// <summary>
+    /// Action to perform when the user wants to retry the connection.
+    /// </summary>
     let retryAction: () -> Void
 
     private var message: String {
@@ -9,26 +16,21 @@ struct NoInternetScreen: View {
 
     var body: some View {
         ZStack {
-            // Фон на весь экран
             Image("internetBackground")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
 
-            // Центровочный контейнер
             VStack {
                 Spacer()
 
-                // Карточка с изображением frame; внутри — контент
                 ZStack {
-                    // Если asset "frame" есть — используем его как фон
                     if UIImage(named: "frame") != nil {
                         Image("frame")
                             .resizable()
                             .scaledToFit()
                             .frame(maxWidth: min(UIScreen.main.bounds.width * 0.9, 420))
                             .overlay(
-                                // Контент поверх изображения
                                 VStack(spacing: 16) {
                                     Image(systemName: "wifi.slash")
                                         .font(.system(size: 36, weight: .bold))
@@ -43,7 +45,6 @@ struct NoInternetScreen: View {
                                 .padding(.vertical, 24)
                             )
                     } else {
-                        // Fallback — простая карточка, если картинки нет
                         RoundedRectangle(cornerRadius: 20)
                             .fill(Color.white.opacity(0.95))
                             .frame(maxWidth: min(UIScreen.main.bounds.width * 0.9, 420))

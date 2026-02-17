@@ -1,16 +1,49 @@
 import Foundation
 
+/// <summary>
+/// Represents errors that can occur during server API communication.
+/// </summary>
 enum ServerAPIError: Error {
+    /// <summary>
+    /// Indicates that the server URL is invalid.
+    /// </summary>
     case invalidURL
+
+    /// <summary>
+    /// Indicates a transport-level error occurred during the request.
+    /// </summary>
     case transportError(Error)
+
+    /// <summary>
+    /// Indicates that the server response is invalid or unexpected.
+    /// </summary>
     case invalidResponse
+
+    /// <summary>
+    /// Indicates that the server returned an error with a message.
+    /// </summary>
     case serverError(String)
 }
 
+/// <summary>
+/// Provides networking functionality for communicating with the backend server.
+/// Implemented as a singleton to centralize API access.
+/// </summary>
 final class ServerAPI {
+
+    /// <summary>
+    /// Shared singleton instance of ServerAPI.
+    /// </summary>
     static let shared = ServerAPI()
+
+    /// <summary>
+    /// Private initializer to enforce singleton usage.
+    /// </summary>
     private init() {}
 
+    /// <summary>
+    /// Sends conversion data to the server and attempts to retrieve a web URL from the response.
+/// </summary>
     func fetchWebURL(using conversionData: [AnyHashable: Any]?,
                      timeout: TimeInterval = 10) async throws -> String? {
 
@@ -34,10 +67,9 @@ final class ServerAPI {
                     try await URLSession.shared.data(for: request)
                 }
 
-                // timeout task
                 group.addTask {
                     try await Task.sleep(nanoseconds: UInt64(timeout * 1_000_000_000))
-                    throw ServerAPIError.invalidResponse // will cancel
+                    throw ServerAPIError.invalidResponse
                 }
 
                 let result = try await group.next()!
