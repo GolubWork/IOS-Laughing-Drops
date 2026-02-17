@@ -1,5 +1,8 @@
 import SwiftUI
 
+/// <summary>
+/// Displays the application log console with scrollable log lines and a clear button.
+/// </summary>
 struct ConsoleView: View {
     @ObservedObject private var logStore = LogStore.shared
 

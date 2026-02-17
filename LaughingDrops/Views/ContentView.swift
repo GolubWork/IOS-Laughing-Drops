@@ -1,5 +1,8 @@
 import SwiftUI
 
+/// <summary>
+/// Main content view that switches between different screens based on the application's state.
+/// </summary>
 struct ContentView: View {
     @StateObject private var viewModel = AppViewModel()
 

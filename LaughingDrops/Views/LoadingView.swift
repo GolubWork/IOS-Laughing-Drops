@@ -1,12 +1,14 @@
 import SwiftUI
 
+/// <summary>
+/// Loading screen with centered logo and animated dots indicating progress.
+/// </summary>
 struct LoadingView: View {
     @State private var dots: Int = 0
     private let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
 
     var body: some View {
         ZStack {
-            // Фон
             Image("loadingBackground")
                 .resizable()
                 .scaledToFill()
@@ -15,7 +17,6 @@ struct LoadingView: View {
             VStack {
                 Spacer()
 
-                // Лого по центру
                 Image("logo")
                     .resizable()
                     .scaledToFit()
@@ -23,7 +24,6 @@ struct LoadingView: View {
 
                 Spacer()
 
-                // Текст Loading с анимацией точек
                 Text("Loading" + String(repeating: ".", count: dots))
                     .font(.title2)
                     .foregroundColor(.white)

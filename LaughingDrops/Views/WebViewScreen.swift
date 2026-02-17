@@ -1,7 +1,14 @@
 import SwiftUI
 import WebKit
 
+/// <summary>
+/// SwiftUI wrapper for displaying web content using WKWebView with custom navigation handling.
+/// Handles too many redirects, disables zoom, and opens target="_blank" links in the same view.
+/// </summary>
 struct WebViewScreen: UIViewRepresentable {
+    /// <summary>
+    /// URL to load in the web view.
+    /// </summary>
     let url: URL
 
     func makeCoordinator() -> Coordinator {
@@ -17,7 +24,9 @@ struct WebViewScreen: UIViewRepresentable {
 
     func updateUIView(_ uiView: WKWebView, context: Context) {}
 
-    // MARK: - Coordinator
+    /// <summary>
+    /// Coordinator to handle WKWebView navigation delegate methods.
+    /// </summary>
     class Coordinator: NSObject, WKNavigationDelegate {
         let initialURL: URL
 
@@ -25,7 +34,9 @@ struct WebViewScreen: UIViewRepresentable {
             self.initialURL = initialURL
         }
 
-        // 1️⃣ Лечит ошибку -1007 (слишком много редиректов)
+        /// <summary>
+        /// Handles error -1007 (too many redirects) by reloading the last known URL.
+        /// </summary>
         func webView(_ webView: WKWebView,
                      didFailProvisionalNavigation navigation: WKNavigation!,
                      withError error: Error) {
@@ -44,7 +55,9 @@ struct WebViewScreen: UIViewRepresentable {
             }
         }
 
-        // 2️⃣ Отключаем зум
+        /// <summary>
+        /// Injects meta viewport to disable zoom after page finishes loading.
+        /// </summary>
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
             let js = """
             var meta = document.querySelector('meta[name=viewport]');
@@ -58,7 +71,9 @@ struct WebViewScreen: UIViewRepresentable {
             webView.evaluateJavaScript(js, completionHandler: nil)
         }
 
-        // 3️⃣ Все target="_blank" → в этом же окне
+        /// <summary>
+        /// Forces links with target="_blank" to open in the same web view.
+        /// </summary>
         func webView(_ webView: WKWebView,
                      createWebViewWith configuration: WKWebViewConfiguration,
                      for navigationAction: WKNavigationAction,
