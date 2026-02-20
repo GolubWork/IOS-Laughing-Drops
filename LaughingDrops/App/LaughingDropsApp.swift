@@ -1,55 +1,39 @@
 import SwiftUI
 
-/// <summary>
-/// Main application entry point. Initializes the app delegate, view models,
-/// and launches the root view with necessary environment objects.
-/// </summary>
-@main
-struct LaughingDropsApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @StateObject var appVM = AppViewModel()
-    @StateObject var history = HistoryStore()
-
-    var body: some Scene {
-        WindowGroup {
-            RootView()
-                .environmentObject(appVM)
-                .environmentObject(history)
-                .onAppear {
-                    appVM.start()
-                }
-        }
+/// Holds the app view model built from the launch container. Created once when LaughingDropsApp initializes.
+@MainActor
+private final class AppViewModelHolder: ObservableObject {
+    let container: DependencyContainer
+    lazy var viewModel: AppViewModel = AppViewModel(
+        initializeAppUseCase: container.initializeAppUseCase,
+        pushTokenProvider: container.pushTokenProvider
+    )
+    init(container: DependencyContainer) {
+        self.container = container
     }
 }
 
-/// <summary>
-/// Root view that switches between different screens based on the application's state.
-/// </summary>
-struct RootView: View {
-    @EnvironmentObject var appVM: AppViewModel
+/// Main application entry point. AppDelegate creates the dependency container at launch and assigns it
+/// so LaughingDropsApp can read it once to build the view model and inject into the hierarchy.
+@main
+@MainActor
+struct LaughingDropsApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @StateObject private var holder: AppViewModelHolder
+    @StateObject private var history = HistoryStore()
 
-    var body: some View {
-        Group {
-            switch appVM.state {
-            case .loading:
-                LoadingView()
-            case .firstLaunch(let url):
-                FirstLaunchScreen(url: url)
-            case .game:
-                MainTabView()
-            case .web(let url):
-                WebWindow(url: url)
-            case .error(let msg):
-                Text("Error: \(msg)")
-                    .foregroundColor(.red)
-            case .askNotifications(let url):
-                FirstLaunchScreen(url: url)
-            case .noInternet:
-                NoInternetScreen(retryAction: {
-                    appVM.start()
-                })
-            }
+    init() {
+        _holder = StateObject(wrappedValue: AppViewModelHolder(container: AppDependencies.launchContainer!))
+    }
+
+    var body: some Scene {
+        let container = appDelegate.container
+        return WindowGroup {
+            RootView()
+                .environment(\.dependencyContainer, container)
+                .environmentObject(holder.viewModel)
+                .environmentObject(history)
+                .onAppear { holder.viewModel.start() }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
