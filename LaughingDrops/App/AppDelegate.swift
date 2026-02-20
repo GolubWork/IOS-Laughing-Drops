@@ -1,85 +1,79 @@
 import UIKit
 import AppsFlyerLib
+import AppTrackingTransparency
 import FirebaseCore
 import FirebaseMessaging
 import UserNotifications
 
-/// <summary>
 /// Application delegate responsible for configuring Firebase, AppsFlyer,
 /// push notifications, and handling application lifecycle events.
-/// </summary>
+/// Holds the dependency container created at launch; LaughingDropsApp reads it and passes into views.
 final class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
-    /// <summary>
     /// Current orientation lock used to restrict supported interface orientations.
-    /// </summary>
     var orientationLock: UIInterfaceOrientationMask = .portrait
 
-    /// <summary>
-    /// Performs application startup configuration including Firebase setup,
-    /// push notification registration, and AppsFlyer initialization.
-    /// </summary>
+    /// Dependency container created at launch. Set in didFinishLaunching; LaughingDropsApp reads it and injects into views.
+    private(set) var container: DependencyContainer!
+
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        container = AppDependencies.containerForTesting ?? AppDependencies.makeDefaultContainer()
+        AppDependencies.setLaunchContainer(container)
 
         FirebaseApp.configure()
 
         UNUserNotificationCenter.current().delegate = self
         application.registerForRemoteNotifications()
 
+        guard let container = self.container else { return true }
         let appsFlyer = AppsFlyerLib.shared()
-        appsFlyer.appsFlyerDevKey = AppConfig.shared.appsFlyerDevKey
-        appsFlyer.appleAppID = AppConfig.shared.storeIdWithPrefix
-        appsFlyer.delegate = AppsFlyerProvider.shared
-        appsFlyer.isDebug = AppConfig.shared.isDebug
+        appsFlyer.appsFlyerDevKey = container.configuration.appsFlyerDevKey
+        appsFlyer.appleAppID = container.configuration.storeIdWithPrefix
+        appsFlyer.delegate = container.analyticsRepository as? AppsFlyerLibDelegate
+        appsFlyer.isDebug = container.configuration.isDebug
 
         appsFlyer.start()
 
         return true
     }
 
-    /// <summary>
-    /// Notifies AppsFlyer when the application becomes active.
-    /// </summary>
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if #available(iOS 14, *) {
-            Task { @MainActor in
-                TrackingAuthorizationManager.shared.requestIfNeeded()
-            }
-        }
         AppsFlyerLib.shared().start()
+        requestTrackingAuthorizationIfNeeded()
     }
 
-    /// <summary>
-    /// Receives APNS device token, registers it with Firebase Messaging,
-    /// and retrieves the corresponding FCM token.
-    /// </summary>
+    private func requestTrackingAuthorizationIfNeeded() {
+        guard #available(iOS 14, *) else { return }
+        guard ATTrackingManager.trackingAuthorizationStatus == .notDetermined else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            ATTrackingManager.requestTrackingAuthorization { _ in
+                self?.container?.logger.log("ATT authorization request completed")
+            }
+        }
+    }
+
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
-        AppLogger.log("APNS device token received")
+        container.logger.log("APNS device token received")
 
         Task {
             do {
                 let fcmToken = try await Messaging.messaging().token()
-                AppLogger.log("FCM token received: \(fcmToken)")
-                FCMTokenStore.shared.token = fcmToken
+                container.logger.log("FCM token received: \(fcmToken)")
+                container.fcmTokenDataSource.token = fcmToken
             } catch {
-                AppLogger.log("Failed to get FCM token: \(error.localizedDescription)", level: .error)
+                container.logger.log("Failed to get FCM token: \(error.localizedDescription)", level: .error)
             }
         }
     }
 
-    /// <summary>
-    /// Returns currently supported interface orientations based on orientation lock state.
-    /// </summary>
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return orientationLock
     }
 
-    /// <summary>
-    /// Handles universal links and forwards user activity to AppsFlyer.
-    /// </summary>
     func application(_ application: UIApplication, continue userActivity: NSUserActivity,
                      restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         AppsFlyerLib.shared().continue(userActivity, restorationHandler: nil)
