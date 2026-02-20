@@ -1,6 +1,6 @@
+# Fastlane (CI/local) and CocoaPods (iOS deps). Run: bundle install && bundle exec pod install
 source "https://rubygems.org"
+
 gem "fastlane"
-gem "xcode-install"
-gem 'fastlane-plugin-github_action', git: "https://github.com/joshdholtz/fastlane-plugin-github_action"
-gem 'cocoapods', '~> 1.16'
-gem 'xcodeproj', '~> 1.27'
+gem "cocoapods", "~> 1.16"
+gem "xcodeproj", "~> 1.27"
