@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		6C4370984FDD77CB4E64FDEE /* Pods_LaughingDrops.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD3130975D5EDC8047F44BB7 /* Pods_LaughingDrops.framework */; };
+		9D6BE6A7FE3DBE0A8916184E /* Pods_notifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8EEBC658C668BA619A9F653 /* Pods_notifications.framework */; };
 		C4251E072EE194B000CD6F2C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4251E062EE194B000CD6F2C /* GoogleService-Info.plist */; };
 		C4251F9E2EEC2FFD00CD6F2C /* notifications.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C4251F972EEC2FFD00CD6F2C /* notifications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		CE51D66F49A5ACAB5959FA5F /* Pods_LaughingDrops_notifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D6A35C2EBC05987D3E5D564 /* Pods_LaughingDrops_notifications.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,18 +41,18 @@
 		073CCEFE7013452E59D2B513 /* Pods-LaughingDrops-notifications.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LaughingDrops-notifications.debug.xcconfig"; path = "Target Support Files/Pods-LaughingDrops-notifications/Pods-LaughingDrops-notifications.debug.xcconfig"; sourceTree = "<group>"; };
 		202734855FDD2A2F92CDE05F /* Pods-LaughingDrops-notifications.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LaughingDrops-notifications.release.xcconfig"; path = "Target Support Files/Pods-LaughingDrops-notifications/Pods-LaughingDrops-notifications.release.xcconfig"; sourceTree = "<group>"; };
 		4CF9D0D1532C3B60841C6849 /* Pods-notifications.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notifications.release.xcconfig"; path = "Target Support Files/Pods-notifications/Pods-notifications.release.xcconfig"; sourceTree = "<group>"; };
-		8D6A35C2EBC05987D3E5D564 /* Pods_LaughingDrops_notifications.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LaughingDrops_notifications.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F559B67E7626C1DC670ED95 /* Pods-LaughingDrops.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LaughingDrops.release.xcconfig"; path = "Target Support Files/Pods-LaughingDrops/Pods-LaughingDrops.release.xcconfig"; sourceTree = "<group>"; };
 		BC56C79990DC9E5C91DE075F /* Pods-notifications.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notifications.debug.xcconfig"; path = "Target Support Files/Pods-notifications/Pods-notifications.debug.xcconfig"; sourceTree = "<group>"; };
 		C390015D9A80525BC5684A76 /* Pods-LaughingDrops.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LaughingDrops.debug.xcconfig"; path = "Target Support Files/Pods-LaughingDrops/Pods-LaughingDrops.debug.xcconfig"; sourceTree = "<group>"; };
 		C4251DD42EE193B600CD6F2C /* LaughingDrops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LaughingDrops.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4251E062EE194B000CD6F2C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C4251F972EEC2FFD00CD6F2C /* notifications.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = notifications.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8EEBC658C668BA619A9F653 /* Pods_notifications.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_notifications.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD3130975D5EDC8047F44BB7 /* Pods_LaughingDrops.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LaughingDrops.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		C4251FA22EEC2FFD00CD6F2C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		C4251FA22EEC2FFD00CD6F2C /* Exceptions for "notifications" folder in "notifications" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -62,8 +62,29 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		C4251DD62EE193B600CD6F2C /* LaughingDrops */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LaughingDrops; sourceTree = "<group>"; };
-		C4251F982EEC2FFD00CD6F2C /* notifications */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (C4251FA22EEC2FFD00CD6F2C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = notifications; sourceTree = "<group>"; };
+		C4251DD62EE193B600CD6F2C /* LaughingDrops */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = LaughingDrops;
+			sourceTree = "<group>";
+		};
+		C4251F982EEC2FFD00CD6F2C /* notifications */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C4251FA22EEC2FFD00CD6F2C /* Exceptions for "notifications" folder in "notifications" target */,
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = notifications;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE51D66F49A5ACAB5959FA5F /* Pods_LaughingDrops_notifications.framework in Frameworks */,
+				9D6BE6A7FE3DBE0A8916184E /* Pods_notifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,7 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				DD3130975D5EDC8047F44BB7 /* Pods_LaughingDrops.framework */,
-				8D6A35C2EBC05987D3E5D564 /* Pods_LaughingDrops_notifications.framework */,
+				D8EEBC658C668BA619A9F653 /* Pods_notifications.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -165,7 +186,6 @@
 				C4251F932EEC2FFD00CD6F2C /* Sources */,
 				C4251F942EEC2FFD00CD6F2C /* Frameworks */,
 				C4251F952EEC2FFD00CD6F2C /* Resources */,
-				C7E0D34C9682B7D1AAB87806 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -281,7 +301,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-LaughingDrops-notifications-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-notifications-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -308,21 +328,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C7E0D34C9682B7D1AAB87806 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LaughingDrops-notifications/Pods-LaughingDrops-notifications-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -542,7 +547,7 @@
 		};
 		C4251FA02EEC2FFD00CD6F2C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 073CCEFE7013452E59D2B513 /* Pods-LaughingDrops-notifications.debug.xcconfig */;
+			baseConfigurationReference = BC56C79990DC9E5C91DE075F /* Pods-notifications.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -570,7 +575,7 @@
 		};
 		C4251FA12EEC2FFD00CD6F2C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 202734855FDD2A2F92CDE05F /* Pods-LaughingDrops-notifications.release.xcconfig */;
+			baseConfigurationReference = 4CF9D0D1532C3B60841C6849 /* Pods-notifications.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
